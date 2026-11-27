@@ -1,0 +1,153 @@
+.panel {
+  --example-accent: #dcedb7;
+  --example-ground: #cbdcb5;
+  padding: clamp(1.15rem, 3vw, 3rem);
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #242a22;
+  color: #fbfaf4;
+}
+
+.panel[data-example="identity"] {
+  --example-accent: #e2cbed;
+  --example-ground: #d5b8e3;
+}
+
+.panel[data-example="campaign"] {
+  --example-accent: #f7d1bd;
+  --example-ground: #e8b7a1;
+}
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: clamp(1rem, 2.6vw, 2.5rem);
+}
+
+.switcher button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: .55rem;
+  padding: .5rem .875rem;
+  border: 1px solid #748170;
+  border-radius: 999px;
+  color: #f3f5eb;
+  font-size: .875rem;
+  font-weight: 700;
+  transition: background-color 230ms ease, color 230ms ease, border-color 230ms ease;
+  cursor: pointer;
+}
+
+.switcher button svg {
+  flex: none;
+}
+
+.switcher button:hover {
+  background: #384235;
+}
+
+.switcher button[aria-pressed="true"] {
+  border-color: var(--example-accent);
+  background: var(--example-accent);
+  color: #242a22;
+}
+
+.switcher button:focus-visible {
+  outline-color: #f3f5eb;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(1.1rem, 3vw, 3rem);
+}
+
+.copy {
+  align-self: center;
+  padding: .5rem 0;
+}
+
+.copy h3 {
+  max-width: 15ch;
+  font-size: clamp(2rem, 4.2vw, 4.5rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -.065em;
+  text-wrap: balance;
+}
+
+.copy dl {
+  display: grid;
+  gap: 1rem;
+  max-width: 42ch;
+  margin-block: 1.45rem 1.25rem;
+}
+
+.copy dl > div {
+  display: grid;
+  gap: .3rem;
+  padding-top: .75rem;
+  border-top: 1px solid #4b5748;
+}
+
+.copy dt {
+  color: var(--example-accent);
+  font-size: .875rem;
+  font-weight: 750;
+}
+
+.copy dd {
+  color: #edf0e7;
+  line-height: 1.6;
+}
+
+.copy a {
+  color: #fbfaf4;
+}
+
+.art {
+  --service-inset: clamp(10px, 3.6cqi, 24px);
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-width: 0;
+  min-height: clamp(16rem, 30vw, 28rem);
+  align-items: center;
+  overflow: hidden;
+  border-radius: calc(var(--radius) * .72);
+  background-color: var(--example-ground);
+  container-type: inline-size;
+}
+
+.art::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url("../assets/cta-sand-grain.webp") repeat;
+  mix-blend-mode: soft-light;
+  opacity: .55;
+  content: "";
+}
+
+.scene {
+  width: min(100%, 44rem);
+  margin-inline: auto;
+}
+
+@media (max-width: 48rem) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .copy h3 {
+    max-width: 22ch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switcher button {
+    transition: none;
+  }
+}

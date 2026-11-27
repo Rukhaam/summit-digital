@@ -1,0 +1,38 @@
+.preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 427 / 292;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.background { display: block; width: 100%; height: 100%; }
+.preview > img + img { position: absolute; height: auto; }
+
+.signup {
+  left: 39.5785%;
+  top: 54.7945%;
+  width: 8.1967%;
+  animation: pointAtSignup 4s ease-in-out infinite;
+}
+
+.setup {
+  left: 57.8454%;
+  top: 14.0411%;
+  width: 7.7283%;
+  animation: pointAtSetup 4s ease-in-out infinite;
+}
+
+@keyframes pointAtSignup {
+  0%, 35%, 72%, 100% { transform: none; }
+  50%, 60% { transform: translate(-8%, 8%) rotate(-4deg); }
+}
+
+@keyframes pointAtSetup {
+  0%, 16%, 80%, 100% { transform: none; }
+  30%, 60% { transform: translate(12%, 65%) rotate(-24deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preview > img { animation: none; }
+}

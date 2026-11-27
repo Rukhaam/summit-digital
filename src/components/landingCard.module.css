@@ -1,0 +1,67 @@
+.frame,
+.surface {
+  display: grid;
+  min-width: 0;
+}
+
+.frame {
+  --card-lift: clamp(-108px, -7.5vw, -65px);
+  --card-distance: -145px;
+  --card-drift: -18px;
+  --card-pitch: -17deg;
+  --card-yaw: 11deg;
+  --card-roll: -1.75deg;
+}
+
+.frame[data-reverse] {
+  --card-drift: 18px;
+  --card-yaw: -11deg;
+  --card-roll: 1.75deg;
+}
+
+.frame[data-ss-playback="paused"] .surface {
+  transform:
+    perspective(1200px)
+    translate3d(
+      calc(var(--card-drift) * var(--card-depth, 0)),
+      calc(var(--card-lift) * var(--card-depth, 0)),
+      calc(var(--card-distance) * var(--card-depth, 0))
+    )
+    rotateX(calc(var(--card-pitch) * var(--card-depth, 0)))
+    rotateY(calc(var(--card-yaw) * var(--card-depth, 0)))
+    rotateZ(calc(var(--card-roll) * var(--card-depth, 0)));
+  opacity: calc(1 - .44 * var(--card-depth, 0));
+}
+
+.frame:focus-within .surface {
+  transform: none;
+  opacity: 1;
+}
+
+.frame[data-ss-playback="paused"] :global(.ss-cursor) {
+  visibility: hidden;
+}
+
+@media (max-width: 47rem) {
+  .frame {
+    --card-lift: -54px;
+    --card-distance: -95px;
+    --card-drift: -8px;
+    --card-pitch: -12deg;
+    --card-yaw: 7deg;
+    --card-roll: -.9deg;
+  }
+
+  .frame[data-reverse] {
+    --card-drift: 8px;
+    --card-yaw: -7deg;
+    --card-roll: .9deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame[data-ss-playback="paused"] .surface {
+    transform: none;
+    opacity: 1;
+  }
+}

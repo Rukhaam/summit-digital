@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# Local environment and deployment state
+.env
+.env.*
+!.env.example
+!.env.*.example
+.vercel/
+
+# Local agent tools and credentials
+/.agents/
+/.codex/
+/.aws/
+/skills-lock.json
+
+# Generated caches and test artifacts
+.cache/
+.vite/
+coverage/
+playwright-report/
+test-results/
+/.test-artifacts/
+
+# Local reference media
+/transition
+src/manychat-bab4fd.mp4
+3d-sec.mp4
+Recording 2026-11-26 200343.mp4
+pricing-page.mp4
