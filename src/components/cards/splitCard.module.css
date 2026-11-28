@@ -1,0 +1,108 @@
+.card {
+  --preview-height: var(--split-preview-height, clamp(19rem, 27vw, 23rem));
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #f7f6f3;
+  box-shadow: inset 0 0 0 1px #e9e7e0;
+}
+
+.copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 4.5vw, 4rem);
+}
+
+.intro {
+  --preview-height: clamp(24rem, 35vw, 30rem);
+}
+
+.intro .copy {
+  padding: clamp(1.5rem, 4.1vw, 3.75rem);
+}
+
+.preview {
+  --ui-inset: clamp(16px, 7cqi, 46px);
+  --centered-inset: max(34px, calc((var(--preview-height) - 210px) / 2));
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  min-width: 0;
+  min-height: var(--preview-height);
+  flex: 0 0 62%;
+  overflow: hidden;
+  background-color: var(--preview-ground);
+  pointer-events: none;
+}
+
+.intro .preview {
+  flex-basis: 54%;
+}
+
+.preview::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url("../../assets/cta-sand-grain.webp") repeat;
+  background-size: 260px;
+  mix-blend-mode: soft-light;
+  opacity: .38;
+  content: "";
+}
+
+.preview[data-tone="sage"] {
+  --preview-ground: #c6d7af;
+  --preview-accent: #365a38;
+}
+
+.preview[data-tone="clay"] {
+  --preview-ground: #eeb19b;
+  --preview-accent: #92432f;
+}
+
+.preview[data-tone="blue"] {
+  --preview-ground: #777fce;
+  --preview-accent: #38449b;
+}
+
+.stage :global(.ss-stage) {
+  --preview-shadow: 0 2px 4px rgb(37 29 27 / 9%), 0 14px 30px -8px rgb(37 29 27 / 25%);
+  --ss-font: "Plus Jakarta Sans", system-ui, sans-serif;
+  overflow: hidden;
+  background: transparent;
+}
+
+@media (max-width: 45rem) {
+  .card {
+    --preview-height: var(--split-preview-height, 17.5rem);
+    flex-direction: column;
+  }
+
+  .intro {
+    --preview-height: clamp(19rem, 48vw, 23rem);
+  }
+
+  .intro .preview,
+  .preview {
+    flex: none;
+  }
+}
+
+.preview[data-tone="launch"] {
+  --ui-inset: 0px;
+  --preview-ground: transparent;
+  --preview-accent: #783cba;
+  border-radius: .85rem;
+}
+
+.preview[data-tone="launch"]::before { content: none; }
+.preview[data-tone="inbox"] {
+  --preview-ground: transparent;
+  --preview-accent: #27242c;
+  overflow: visible;
+}
+.preview[data-tone="inbox"]::before { content: none; }

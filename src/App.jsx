@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Navbar from "./components/navbar.component";
-import MessagingFooter from "./components/messagingFooter.component";
-import Home from "./pages/home.page";
-import Services from "./pages/service.page";
-import Pricing from "./pages/pricing.page";
-import Contact from "./pages/contact.page";
+import Navbar from "./components/navigation/navbar.component";
+import MessagingFooter from "./components/footer/messagingFooter.component";
+import Home from "./features/home/home.page";
+import Services from "./features/services/service.page";
+import Pricing from "./features/pricing/pricing.page";
+import Contact from "./features/contact/contact.page";
 
 function App() {
   const { pathname, hash } = useLocation();

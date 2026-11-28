@@ -1,0 +1,253 @@
+.panel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1.02fr 1fr;
+  align-items: center;
+  min-height: var(--cta-panel-height, clamp(29rem, 40vw, 35rem));
+  overflow: hidden;
+  border: 1px solid #e2d6bc;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(ellipse at 12% 0%, #fbf4e5 0%, transparent 66%),
+    radial-gradient(ellipse at 68% 115%, #d1bc94 0%, transparent 66%),
+    #ede0c6;
+  color: #26241e;
+}
+
+.panel::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url("../../../assets/cta-sand-grain.webp") repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.68;
+  pointer-events: none;
+  content: "";
+}
+
+.copy {
+  min-width: 0;
+  padding: clamp(2rem, 5vw, 4.875rem) 0 clamp(2rem, 5vw, 4.875rem) var(--cta-copy-inset, clamp(2rem, 6vw, 5.5rem));
+}
+
+.copy h2 {
+  font-size: clamp(3.3rem, 6vw, 5.3rem);
+  font-weight: 700;
+  line-height: 0.99;
+  letter-spacing: -0.075em;
+}
+
+.copy h2 span {
+  display: block;
+  color: #594c37;
+}
+
+.copy p {
+  max-width: 37ch;
+  margin-block: 1.25rem 1.75rem;
+  color: #524a3b;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.6;
+  text-wrap: balance;
+}
+
+.copy .cta {
+  min-height: 3.75rem;
+  gap: clamp(1rem, 2.25vw, 2.1rem);
+  padding: 0.4rem 0.45rem 0.4rem 1.25rem;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+}
+
+.arrow {
+  display: grid;
+  width: 2.75rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: #eaddc4;
+  color: #26241e;
+  transition: background-color 220ms var(--ease-out);
+}
+
+.cta:hover .arrow {
+  background: #f8edda;
+}
+
+.preview {
+  align-self: end;
+  justify-self: var(--cta-preview-alignment, center);
+  width: min(100%, var(--cta-preview-width, 36rem));
+  min-width: 0;
+  pointer-events: none;
+}
+
+.stage :global(.ss-stage) {
+  overflow: hidden;
+  background: transparent;
+}
+
+.window {
+  position: absolute;
+  inset: 28px 28px auto;
+  height: 370px;
+  border: 1px solid #d6cdbb;
+  box-shadow: 0 16px 52px -12px rgb(76 55 27 / 30%), 0 3px 12px rgb(76 55 27 / 10%);
+}
+
+.window :global(.ss-window__side) {
+  background: #f5f3ee;
+}
+
+.sidebar {
+  display: flex;
+  height: 282px;
+  flex-direction: column;
+  gap: 5px;
+  padding: 16px 10px;
+  color: var(--ss-text);
+}
+
+.sidebar > span {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding-inline: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.sidebar svg {
+  flex: none;
+}
+
+.sidebar > .current {
+  background: var(--ss-accent-soft);
+  color: var(--ss-accent);
+  font-weight: 700;
+}
+
+.settings {
+  margin-top: auto;
+}
+
+.toolbarIcon {
+  flex: none;
+  margin-right: 3px;
+  color: var(--ss-text-faint);
+}
+
+.editor {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: 24px;
+}
+
+.editorHeading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ss-text-strong);
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+}
+
+.document {
+  display: grid;
+  width: 34px;
+  aspect-ratio: 1;
+  place-items: center;
+  flex: none;
+  border-radius: 7px;
+  background: var(--ss-accent-soft);
+  color: var(--ss-accent);
+}
+
+.service {
+  display: grid;
+  gap: 3px;
+}
+
+.label,
+.field :global(.ss-field__label) {
+  color: var(--ss-text-strong);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.save {
+  justify-self: end;
+  margin-top: 2px;
+}
+
+.editor[data-brief-status="saved"] .save {
+  background: #dce7db;
+  color: #33483a;
+}
+
+.cursorEntry,
+.cursorExit {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.cursorEntry {
+  right: 58px;
+  top: 92px;
+}
+
+.cursorExit {
+  right: 11px;
+  bottom: 47px;
+}
+
+.stage :global(.ss-stage[data-layout="compact"]) .window {
+  height: 312px;
+}
+
+.stage :global(.ss-stage[data-layout="compact"]) .editor {
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+.stage :global(.ss-stage[data-layout="compact"]) .document {
+  width: 29px;
+}
+
+.stage :global(.ss-stage[data-layout="compact"] .ss-seg__option) {
+  font-size: 12.5px;
+}
+
+@media (max-width: 61rem) {
+  .panel {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .copy {
+    padding: clamp(2rem, 7vw, 4rem) clamp(1.375rem, 6.5vw, 4rem) clamp(0.65rem, 2vw, 1.25rem);
+  }
+
+  .copy h2 {
+    font-size: clamp(2.68rem, 8.5vw, 4.9rem);
+  }
+
+  .preview {
+    justify-self: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}

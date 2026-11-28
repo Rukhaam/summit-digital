@@ -1,0 +1,16 @@
+.form {
+  min-width:0; padding:clamp(1.35rem,3.5vw,3.75rem); border:1px solid #3023361c;
+  border-radius:clamp(1.25rem,2vw,2rem); background:#fffdfa; box-shadow:0 6px 0 #3d224d12;
+  scroll-margin-top:1rem;
+}
+.form h2 { font-size:clamp(2.3rem,3.5vw,4rem); font-weight:850; line-height:1; letter-spacing:-.065em; }
+.note { margin-top:.65rem; font-size:.875rem; color:#605a62; }
+.form :global(.contact-fields) { margin:2.25rem 0 1.6rem; gap:1.35rem 1rem; }
+.form label { gap:.5rem; }
+.form :is(input,textarea) { min-height:3rem; padding:.8rem; font-size:1rem; background:white; border:1px solid #bdb5c0; border-radius:.65rem; }
+.form :is(input,textarea):focus-visible { outline:2px solid #673292; outline-offset:2px; border-color:#673292; }
+.form button { width:100%; min-height:3.2rem; display:flex; justify-content:space-between; padding-inline:1.4rem; background:#1d191f; color:white; border-radius:2rem; }
+.form button:hover:enabled { background:#53326d; }
+.success,.error { padding:.85rem 1rem; margin-top:1rem; border-radius:.65rem; font-size:.9rem; }
+.success { color:#18462d; background:#e1f0df; }
+.error { color:#71281f; background:#ffe9e1; }

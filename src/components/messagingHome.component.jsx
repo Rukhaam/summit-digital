@@ -14,13 +14,16 @@ import {
   Workflow,
 } from "lucide-react";
 import {
+  easeInOut,
   motion as Motion,
   useReducedMotion,
   useInView,
   useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 import audiencePortrait from "../assets/audience-portrait.webp";
+import mobilePortrait from "../assets/audience-mobile.webp";
 import { BriefAnimation, ReviewAnimation, LaunchAnimation } from "./gettingStartedPreviews.component";
 import photo from "../assets/services-coffee.webp";
 import "./messagingHome.css";
@@ -58,34 +61,44 @@ const channels = [
 const signup = "/contact";
 function StartLink({ children = "Start a project" }) {
   return (
-    <a className="msg-pill" href={signup}> 
+    <a className="msg-pill" href={signup}>
       {children}
     </a>
   );
 }
 
 export function Audience() {
-  const sequence = useRef(null);
+  const animationTrack = useRef(null);
   const track = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
-    target: sequence,
-    offset: ["start start", "end end"],
+    target: animationTrack,
+    offset: ["start start", "end start"],
   });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 190,
+    damping: 30,
+    restDelta: 0.0001,
+    skipInitialAnimation: true,
+  });
+  const portraitY = useTransform(progress, [0, 0.85], ["4%", "-5%"]);
+  const portraitScale = useTransform(progress, [0, 0.85], [1.13, 1.22]);
+  const mobileTitleX = useTransform(scrollYProgress, [0, 0.48], ["-4vw", "0vw"], { ease: easeInOut });
   const x = useTransform(
-    scrollYProgress,
+    progress,
     [0, 0.5, 0.84],
     ["-28vw", "48vw", "72vw"],
   );
   const scale = useTransform(
-    scrollYProgress,
-    [0, 0.42, 0.57, 0.71, 0.84],
-    [1, 1, 1.65, 3.7, 11],
+    progress,
+    [0.38, 0.85],
+    [1, 11],
+    { ease: (t) => t ** 3 },
   );
-  const yellowFill = useTransform(scrollYProgress, [0.74, 0.84], [0, 1]);
-  const opacity = useTransform(scrollYProgress, [0.85, 0.94], [1, 0]);
+  const yellowFill = useTransform(progress, [0.69, 0.84], [0, 1], { ease: easeInOut });
+  const opacity = useTransform(scrollYProgress, [0.74, 0.96], [1, 0], { ease: easeInOut });
   const visibility = useTransform(scrollYProgress, (p) =>
-    p >= 0.94 ? "hidden" : "visible",
+    p >= 0.96 ? "hidden" : "visible",
   );
 
   const [edges, setEdges] = useState({ start: true, end: false });
@@ -117,16 +130,30 @@ export function Audience() {
   }
   return (
     <section
-      ref={sequence}
       className="msg-audience-sequence"
       aria-labelledby="audience-heading"
     >
+      <span ref={animationTrack} className="msg-animation-track" aria-hidden="true" />
       <span className="msg-channel-anchor" id="channels" aria-hidden="true" />
       <div className="msg-audience-stage">
+        <Motion.div className="msg-mobile-reveal" style={{ "--title-x": mobileTitleX }} aria-hidden="true">
+          <div className="msg-mobile-frame">
+            <span className="msg-mobile-title">Everywhere your<br />audience is</span>
+          </div>
+          <div className="msg-mobile-mask">
+            <div className="msg-mobile-frame msg-mobile-portrait flex justify-center">
+              <picture>
+                <source media="(orientation: portrait)" srcSet={mobilePortrait} />
+                <img src={audiencePortrait} alt="" loading="lazy" />
+              </picture>
+              <span className="msg-mobile-title">Everywhere your<br />audience is</span>
+            </div>
+          </div>
+        </Motion.div>
         <div
           className="msg-audience"
           onFocus={() => {
-            if (!reduced && scrollYProgress.get() < 0.94)
+            if (!reduced && !window.matchMedia("(max-width: 48rem)").matches && scrollYProgress.get() < 0.96)
               document
                 .getElementById("channels")
                 .scrollIntoView({ behavior: "instant" });
@@ -178,8 +205,9 @@ export function Audience() {
             className="msg-audience-overlay"
             style={{ opacity, visibility }}
           >
-            <img
+            <Motion.img
               src={audiencePortrait}
+              style={{ y: portraitY, scale: portraitScale }}
               alt=""
               loading="lazy"
               decoding="async"
@@ -231,14 +259,16 @@ const comparison = [
 ];
 export function InboxComparison() {
   const ref = useRef(null);
+  const circle = useRef(null);
+  const drawCircle = useInView(circle, { once: true, amount: 0.5 });
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 18%", "end 100%"],
+    offset: ["start 32%", "end 20%"],
   });
   // Each card travels half its width plus half the gap to share one footprint.
-  const shift = useTransform(scrollYProgress, [0, 0.65, 1], ["calc(0% + 0px)", "calc(-50% - 6px)", "calc(-50% - 6px)"]);
-  const shiftBack = useTransform(scrollYProgress, [0, 0.65, 1], ["calc(0% + 0px)", "calc(50% + 6px)", "calc(50% + 6px)"]);
+  const shift = useTransform(scrollYProgress, [0, 1], ["calc(0% + 0px)", "calc(-50% - 6px)"]);
+  const shiftBack = useTransform(scrollYProgress, [0, 1], ["calc(0% + 0px)", "calc(50% + 6px)"]);
   return (
     <section className="msg-section" id="inbox">
       <Heading icon={Workflow} title="Campaign enquiries, before and after">
@@ -252,7 +282,23 @@ export function InboxComparison() {
               style={reduced ? undefined : { x: i ? shift : shiftBack }}
             >
               <small>{label}</small>
-              <h3>{title}</h3>
+              <h3>
+                {title}
+                {i === 1 && (
+                  <svg
+                    ref={circle}
+                    className="msg-stage-circle"
+                    data-draw={drawCircle}
+                    aria-hidden="true"
+                  >
+                    <ellipse
+                      cx="50%" cy="50%" rx="49%" ry="48%"
+                      fill="none" stroke="#fff102" strokeWidth="2"
+                      pathLength="100"
+                    />
+                  </svg>
+                )}
+              </h3>
               <ul>
                 {items.map((item) => (
                   <li key={item}>
@@ -301,7 +347,9 @@ const flows = [
     "You’re on the list. Good luck!",
   ],
 ];
-export function ChatPreview({ index = 0, replay = false }) {
+const chatReplayDuration = 5800;
+
+export function ChatPreview({ index = 0, replay = false, playbackProgress }) {
   const thread = useRef(null);
   const visible = useInView(thread, { amount: .6 });
   const reduced = useReducedMotion();
@@ -317,23 +365,37 @@ export function ChatPreview({ index = 0, replay = false }) {
         { ...hold, offset: start + .085 }, { ...hold, offset: .87 },
         { opacity: 0, transform: "translateY(-5px)", offset: .97 },
         { ...enter, offset: 1 },
-      ], { duration: 5800, iterations: Infinity });
+      ], { duration: chatReplayDuration, iterations: Infinity });
     });
-    return () => animations.forEach(animation => animation.cancel());
-  }, [index, replay, visible, reduced]);
+    let frame;
+    function updateProgress() {
+      playbackProgress.set(animations[0].effect.getComputedTiming().progress ?? 0);
+      frame = requestAnimationFrame(updateProgress);
+    }
+    if (playbackProgress) updateProgress();
+    return () => {
+      cancelAnimationFrame(frame);
+      animations.forEach(animation => animation.cancel());
+      playbackProgress?.set(0);
+    };
+  }, [index, replay, visible, reduced, playbackProgress]);
   const flow = flows[index];
   return (
     <div className="msg-phone" aria-hidden="true">
-      <div className="msg-profile">
-        <img alt="" src={photo} />
-        <strong>Studio inbox</strong>
+      <span className="msg-phone-volume" />
+      <span className="msg-phone-power" />
+      <div className="msg-phone-screen">
+        <div className="msg-profile">
+          <img alt="" src={photo} />
+          <strong>Studio inbox</strong>
+        </div>
+        <div key={index} ref={thread} className="msg-thread" data-replay={replay || undefined}>
+          <span>{flow[1]}</span>
+          <span>{flow[2]}</span>
+          <span>{flow[3]}</span>
+        </div>
+        <div className="msg-compose">Message…</div>
       </div>
-      <div key={index} ref={thread} className="msg-thread" data-replay={replay || undefined}>
-        <span>{flow[1]}</span>
-        <span>{flow[2]}</span>
-        <span>{flow[3]}</span>
-      </div>
-      <div className="msg-compose">Message…</div>
     </div>
   );
 }

@@ -1,0 +1,9 @@
+.inner { --landing-gutter:clamp(1.25rem,5.5vw,6rem); }
+.preview { width:min(100%,23rem); align-self:end; justify-self:center; --preview-height:13rem; pointer-events:none; }
+@media(max-width:48rem) {
+  .preview { grid-row:3; width:min(85%,19rem); --preview-height:11rem; }
+}
+@media (max-width:48rem) {
+  .cover { background:#322132; }
+  .preview { width:min(76%,16rem); justify-self:start; margin-bottom:.25rem; }
+}

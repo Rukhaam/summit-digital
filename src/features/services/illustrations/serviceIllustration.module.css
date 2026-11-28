@@ -1,0 +1,7 @@
+.illustration { display:block; width:100%; height:auto; }
+@media(prefers-reduced-motion:no-preference) {
+  .code { stroke-dasharray:32; animation:type 4s ease-in-out infinite; }
+  .detail { animation:lift 4s ease-in-out infinite alternate; }
+  @keyframes type { 0%,100% {stroke-dashoffset:32} 42%,83% {stroke-dashoffset:0} }
+  @keyframes lift { to { transform:translate(2px,-4px); } }
+}
